@@ -9,6 +9,7 @@ use App\Entity\Comment;
 use App\Form\ArticleType;
 use App\Form\CommentType;
 use App\Repository\ArticlesRepository;
+use App\Repository\PanierRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use http\Client\Curl\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,6 +35,32 @@ class ECommerceController extends AbstractController
 
     }
 
+    /**
+     * @Route("/promos", name = "promos");
+     */
+    public function promos(ArticlesRepository $repo){
+
+        $articles = $repo->findAll();
+        return $this->render('e_commerce/promos.html.twig', [
+            'controller_name' =>  'ECommerceController',
+            'articles' => $articles
+        ]);
+
+    }
+
+    /**
+     * @Route("/nouveautes", name = "nouveautes")
+     */
+
+    public function nouveautes(ArticlesRepository $repo){
+
+        $articles = $repo->findAll();
+
+        return $this->render('e_commerce/nouveautes.html.twig', [
+            'controller_name' =>  'ECommerceController',
+            'articles' => $articles
+        ]);
+    }
 
     /**
      * @Route("/homme", name = "homme")
@@ -109,15 +136,13 @@ class ECommerceController extends AbstractController
      * @Route("/panier", name = "panier")
      */
 
-    public function panier(ArticlesRepository $repo){
+    public function panier(PanierRepository $repo){
 
-        $articles = $repo->findAll();
+        $panier = $repo->findAll();
 
-        $nbrArticle = 0;
         return $this->render('e_commerce/panier.html.twig', [
             'controller_name' =>  'ECommerceController',
-            'articles' => $articles,
-            'nbrArticle' => $nbrArticle,
+            'panier' => $panier,
         ]);
     }
 

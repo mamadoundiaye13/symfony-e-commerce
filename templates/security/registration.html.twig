@@ -31,4 +31,10 @@
 
     <button type="submit" class="btn btn-success">Inscription</button>
     {{ form_end(form) }}
+
+    <div class="text-sm-center">
+        <h6> Si vous avez un compte connectez-vous ici: </h6>
+        <button><a class="nav-link btn text-success" href="{{ path('app_login') }}">Connexion</a></button>
+    </div>
+
 {% endblock %}

@@ -36,6 +36,7 @@ class SecurityController extends AbstractController
 
             $user->setPassword($hashPassword);
             $user->setConfirmPassword($hashConfirmPassword);
+            $user->setAdmin(false);
             $manager->persist($user);
             $manager->flush();
 
@@ -61,7 +62,6 @@ class SecurityController extends AbstractController
             'articles' => $articles,
         ]);
     }
-
 
     /**
      * @Route("/logout", name="app_logout")

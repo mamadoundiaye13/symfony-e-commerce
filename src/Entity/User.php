@@ -8,7 +8,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
-
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(
@@ -54,6 +53,11 @@ class User implements UserInterface
      * @Assert\EqualTo(propertyPath = "confirmPassword", message = "Mot de passe non identique")
      */
     private $confirmPassword;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $admin;
 
     public function getId(): ?int
     {
@@ -122,5 +126,17 @@ class User implements UserInterface
     {
         // TODO: Implement getRoles() method.
         return array('ROLE_USER');
+    }
+
+    public function getAdmin(): ?bool
+    {
+        return $this->admin;
+    }
+
+    public function setAdmin(?bool $admin): self
+    {
+        $this->admin = $admin;
+
+        return $this;
     }
 }

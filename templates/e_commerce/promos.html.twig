@@ -2,12 +2,9 @@
 {% block title %} Enfant! {% endblock %}
 
 {% block body %}
-
     <section class="articles">
-
         {% for article in articles %}
-
-            {% if article.getCategorie.title == "enfant" %}
+            {% if article.getCategorie.title == "promotions" %}
                 <div class="container">
                     <div class="align-items-sm-start">
                         <div class="col">
@@ -29,8 +26,6 @@
                     </div>
                 </div>
             {% endif %}
-
         {% endfor %}
     </section>
-
 {% endblock %}

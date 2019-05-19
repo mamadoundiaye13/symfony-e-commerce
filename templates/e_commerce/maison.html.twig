@@ -18,6 +18,9 @@
                                         <p> {{ article.getPrice()}} €</p>
                                         <p> {{ article.getNombreDeStockRestant()}} restants</p>
                                         <a href="{{ path('show', {'id': article.id}) }}" class="btn btn-primary"> Description </a>
+                                        {% if app.user %}
+                                            <a href="{{ path('admin_edit', {'id': article.id}) }}" class="btn btn-primary"> Modifier </a>
+                                        {% endif %}
                                     </article>
                                 </div>
                             </div>

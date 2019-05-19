@@ -68,9 +68,15 @@ class Articles
      */
     private $comments;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Panier", mappedBy="id_article")
+     */
+    private $paniers;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->paniers = new ArrayCollection();
     }
 
 
@@ -202,6 +208,34 @@ class Articles
             if ($comment->getArticle() === $this) {
                 $comment->setArticle(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Panier[]
+     */
+    public function getPaniers(): Collection
+    {
+        return $this->paniers;
+    }
+
+    public function addPanier(Panier $panier): self
+    {
+        if (!$this->paniers->contains($panier)) {
+            $this->paniers[] = $panier;
+            $panier->addIdArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removePanier(Panier $panier): self
+    {
+        if ($this->paniers->contains($panier)) {
+            $this->paniers->removeElement($panier);
+            $panier->removeIdArticle($this);
         }
 
         return $this;

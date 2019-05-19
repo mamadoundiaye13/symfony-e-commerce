@@ -21,10 +21,10 @@
 
         </article>
 
-        <section id="commentaires" class="bg-light">
+        <section id="commentaires" >
 
-            <div>
-                <h1> Nouveau Commentaire</h1>
+            <div class="">
+                <h1 class="bg-light"> Nouveau Commentaire</h1>
                 {{ form_start(commentForm) }}
                 {{ form_row(commentForm.content, {
                     'attr': {
@@ -37,8 +37,8 @@
             </div>
 
 
-            <div>
-                <h1> {{ article.comments | length }} Commentaires</h1>
+            <div >
+                <h1 class="bg-light"> {{ article.comments | length }} Commentaires</h1>
                 {% for comment in article.comments %}
                     <div class="comment">
                         <div class="row">

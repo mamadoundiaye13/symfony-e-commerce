@@ -19,7 +19,7 @@ class ArticlesFixtures extends Fixture
         // Créer 3 fakees
 
 
-        $arrayCategorie = array("homme", "femme", "enfant", "maison");
+        $arrayCategorie = array("homme", "femme", "enfant", "maison", "nouveautes", "promotions");
 
         for ($i= 0; $i < sizeof($arrayCategorie); $i++){
             $categorie = new Categorie();
