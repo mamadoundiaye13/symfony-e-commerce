@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+{% block title %} Feminin! {% endblock %}
+{% block body %}
+    <section class="articles">
+        {% for article in articles %}
+            {% if article.getCategorie.title == "femme" %}
+                <div class="container">
+                    <div class="align-items-sm-start">
+                        <div class="col">
+                            <div class="col-lg-4 float-left p-4 mb-5 bg-white text-uppercase text-justify">
+                                <article>
+                                    <a href="{{path('panier')}}">
+                                        <img src="{{article.getPhoto()}}" class="animated bounce infinite" alt="article" id="animated-img1" width="250" height="400">
+                                    </a>
+                                    <p>{{article.getTitle}}</p>
+                                    <p> {{ article.getPrice()}} €</p>
+                                    <p> {{ article.getNombreDeStockRestant()}} restants</p>
+                                    <a href="{{ path('show', {'id': article.id}) }}" class="btn btn-primary"> Description </a>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+        {% endfor %}
+    </section>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+{% block title %}Home!{% endblock %}
+
+{% block body %}
+
+    <section class="">
+        <article class="bg-light">
+            <div class="container-fluid p-5 mb-5 bg-white text-uppercase text-justify">
+                <img src="{{ article.getPhoto() }}" alt="img">
+                <h3> {{ article.getTitle() }}</h3>
+
+                <h6> {{ article.getDescription() }}</h6>
+
+                <h1> {{ article.getPrice()}} €</h1>
+
+                <p class="float-right text-success"> {{ article.getNombreDeStockRestant()}} produits restants</p>
+
+                <a href="{{ path('panier')}}" class="btn btn-primary"> Acheter </a>
+
+            </div>
+
+        </article>
+
+        <section id="commentaires" class="bg-light">
+
+            {% for comment in article.comments %}
+            <div class="comment">
+                <div class="row">
+                    <div class="col-2">
+                        {{ comment.author }}
+
+                    </div>
+                    <div class="col">
+                        {{ comment.content | raw }}
+
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+        </section>
+
+    </section>
+{% endblock %}
