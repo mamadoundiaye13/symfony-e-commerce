@@ -23,21 +23,40 @@
 
         <section id="commentaires" class="bg-light">
 
-            {% for comment in article.comments %}
-            <div class="comment">
-                <div class="row">
-                    <div class="col-2">
-                        {{ comment.author }}
+            <div>
+                <h1> Nouveau Commentaire</h1>
+                {{ form_start(commentForm) }}
+                {{ form_row(commentForm.content, {
+                    'attr': {
+                        'placeholder': "Ajouter un Commentaire public"
+                    }
+                }) }}
 
-                    </div>
-                    <div class="col">
-                        {{ comment.content | raw }}
-
-                    </div>
-
-                </div>
+                <button type="submit" class="btn btn-success">Comenter</button>
+                {{ form_end(commentForm) }}
             </div>
-            {% endfor %}
+
+
+            <div>
+                <h1> {{ article.comments | length }} Commentaires</h1>
+                {% for comment in article.comments %}
+                    <div class="comment">
+                        <div class="row">
+                            <div class="col-2">
+                                {{ comment.author }}
+
+                            </div>
+                            <div class="col">
+                                {{ comment.content | raw }}
+
+                            </div>
+
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+
         </section>
 
     </section>

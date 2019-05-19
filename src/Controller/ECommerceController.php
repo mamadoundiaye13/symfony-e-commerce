@@ -5,9 +5,12 @@ namespace App\Controller;
 
 
 use App\Entity\Articles;
+use App\Entity\Comment;
 use App\Form\ArticleType;
+use App\Form\CommentType;
 use App\Repository\ArticlesRepository;
 use Doctrine\Common\Persistence\ObjectManager;
+use http\Client\Curl\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -123,11 +126,28 @@ class ECommerceController extends AbstractController
      * @Route("/article/{id}", name = "show")
      */
 
-    public function show(Articles $article){
+    public function show(Articles $article, Request $request, ObjectManager $manager){
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
 
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $comment->setCreatedAt(new \DateTime())
+                    ->setArticle($article)
+                    ->setAuthor($this->getUser()->getUsername());
+
+            $manager->persist($comment);
+            $manager->flush();
+
+            return $this->redirectToRoute('show', [
+                'id' => $article->getId()
+            ]);
+        }
         return $this->render('e_commerce/show.html.twig', [
             'controller_name' =>  'ECommerceController',
-            'article' => $article
+            'article' => $article,
+            'commentForm' => $form->createView(),
         ]);
     }
 
