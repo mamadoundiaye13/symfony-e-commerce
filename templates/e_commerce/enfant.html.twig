@@ -29,8 +29,10 @@
                     </div>
                 </div>
             {% endif %}
-
         {% endfor %}
     </section>
+
+    {% include 'e_commerce/commentForm.html.twig' with {'commentForm':commentForm} %}
+
 
 {% endblock %}

@@ -1,6 +1,12 @@
 {% extends 'base.html.twig' %}
 {% block title %}Home!{% endblock %}
 
+
+{% block sidebarGauche %} {% endblock %}
+
+{% block sidebarDroite %} {% endblock %}
+
+
 {% block body %}
 
     <section class="">
@@ -22,21 +28,6 @@
         </article>
 
         <section id="commentaires" >
-
-            <div class="">
-                <h1 class="bg-light"> Nouveau Commentaire</h1>
-                {{ form_start(commentForm) }}
-                {{ form_row(commentForm.content, {
-                    'attr': {
-                        'placeholder': "Ajouter un Commentaire public"
-                    }
-                }) }}
-
-                <button type="submit" class="btn btn-success">Comenter</button>
-                {{ form_end(commentForm) }}
-            </div>
-
-
             <div >
                 <h1 class="bg-light"> {{ article.comments | length }} Commentaires</h1>
                 {% for comment in article.comments %}

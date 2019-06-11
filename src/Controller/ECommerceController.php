@@ -134,8 +134,10 @@ class ECommerceController extends AbstractController
 
     /**
      * @Route("/panier", name = "panier")
+     *
+     * @param PanierRepository $repo
+     * @return Response
      */
-
     public function panier(PanierRepository $repo){
 
         $panier = $repo->findAll();
@@ -149,6 +151,12 @@ class ECommerceController extends AbstractController
 
     /**
      * @Route("/article/{id}", name = "show")
+     *
+     * @param Articles $article
+     * @param Request $request
+     * @param ObjectManager $manager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Exception
      */
 
     public function show(Articles $article, Request $request, ObjectManager $manager){
@@ -174,6 +182,36 @@ class ECommerceController extends AbstractController
             'article' => $article,
             'commentForm' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @param Articles $article
+     * @param Request $request
+     * @param ObjectManager $manager
+     * @return \Symfony\Component\Form\FormInterface|Response
+     * @throws \Exception
+     */
+    public function commentActionCategorie(Articles $article, Request $request, ObjectManager $manager){
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $comment->setCreatedAt(new \DateTime())
+                    ->setArticle($article)
+                    ->setAuthor($this->getUser()->getUsername());
+
+            $manager->persist($comment);
+            $manager->flush();
+
+            return $this->render(controller('App\Controller\ECommerceController', [
+                'CommentForm' => $form,
+                request => app.request,
+            ]));
+
+        }
+        return $form;
     }
 
 
@@ -220,6 +258,26 @@ class ECommerceController extends AbstractController
         return $this->render('e_commerce/create.html.twig', [
             'formArticle' => $form->createView(),
             'editMod' => $article->getId() !== null,
+        ]);
+
+    }
+
+
+
+    /**
+     *
+     * @Route("/serach-article", name="search")
+    **/
+
+    public function searchArticle(ArticlesRepository $articlesRepository, Request $request){
+
+        $articles = $articlesRepository->findAll();
+
+        $searchForm = $request->request->get("search", null);
+
+        return $this->render('e_commerce/search.html.twig', [
+            'articles' => $articles,
+            'searchForm' => $searchForm,
         ]);
 
     }
